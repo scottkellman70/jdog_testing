@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNewItem));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.checkBoxSubItem = new System.Windows.Forms.CheckBox();
             this.comboBoxParentItem = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,16 +51,25 @@
             this.comboBoxCellexType = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewItems = new System.Windows.Forms.DataGridView();
             this.ReloadButton = new System.Windows.Forms.Button();
             this.SubmitButton = new System.Windows.Forms.Button();
-            this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.textBoxSofexCase = new System.Windows.Forms.TextBox();
             this.ButtonOpenPDF = new System.Windows.Forms.Button();
+            this.ButtonExit = new System.Windows.Forms.Button();
+            this.dataGridViewCountries = new System.Windows.Forms.DataGridView();
+            this.ButtonSubmitCountry = new System.Windows.Forms.Button();
+            this.ButtonReloadCountries = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.ButtonLoadCSV = new System.Windows.Forms.Button();
+            this.bindingSourceItems = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSourceCountries = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewItems)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCountries)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceItems)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCountries)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBoxSubItem
@@ -228,7 +238,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(48, 370);
+            this.button1.Location = new System.Drawing.Point(15, 350);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 19;
@@ -238,18 +248,19 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(129, 370);
+            this.button2.Location = new System.Drawing.Point(96, 350);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 20;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // dataGridViewItems
             // 
-            this.dataGridView2.AllowUserToOrderColumns = true;
-            this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dataGridViewItems.AllowUserToOrderColumns = true;
+            this.dataGridViewItems.AllowUserToResizeRows = false;
+            this.dataGridViewItems.AutoGenerateColumns = false;
+            this.dataGridViewItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -257,18 +268,18 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 413);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 10;
-            this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView2.Size = new System.Drawing.Size(1500, 318);
-            this.dataGridView2.TabIndex = 21;
+            this.dataGridViewItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewItems.DataSource = this.bindingSourceItems;
+            this.dataGridViewItems.Location = new System.Drawing.Point(297, 69);
+            this.dataGridViewItems.Name = "dataGridViewItems";
+            this.dataGridViewItems.RowHeadersWidth = 10;
+            this.dataGridViewItems.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridViewItems.Size = new System.Drawing.Size(812, 285);
+            this.dataGridViewItems.TabIndex = 21;
             // 
             // ReloadButton
             // 
-            this.ReloadButton.Location = new System.Drawing.Point(401, 370);
+            this.ReloadButton.Location = new System.Drawing.Point(1115, 65);
             this.ReloadButton.Name = "ReloadButton";
             this.ReloadButton.Size = new System.Drawing.Size(75, 23);
             this.ReloadButton.TabIndex = 22;
@@ -278,7 +289,7 @@
             // 
             // SubmitButton
             // 
-            this.SubmitButton.Location = new System.Drawing.Point(482, 370);
+            this.SubmitButton.Location = new System.Drawing.Point(1115, 91);
             this.SubmitButton.Name = "SubmitButton";
             this.SubmitButton.Size = new System.Drawing.Size(75, 23);
             this.SubmitButton.TabIndex = 23;
@@ -303,16 +314,86 @@
             this.ButtonOpenPDF.UseVisualStyleBackColor = true;
             this.ButtonOpenPDF.Click += new System.EventHandler(this.ButtonOpenPDF_Click);
             // 
+            // ButtonExit
+            // 
+            this.ButtonExit.Location = new System.Drawing.Point(12, 696);
+            this.ButtonExit.Name = "ButtonExit";
+            this.ButtonExit.Size = new System.Drawing.Size(75, 23);
+            this.ButtonExit.TabIndex = 26;
+            this.ButtonExit.Text = "Exit";
+            this.ButtonExit.UseVisualStyleBackColor = true;
+            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
+            // 
+            // dataGridViewCountries
+            // 
+            this.dataGridViewCountries.AllowUserToOrderColumns = true;
+            this.dataGridViewCountries.AllowUserToResizeRows = false;
+            this.dataGridViewCountries.AutoGenerateColumns = false;
+            this.dataGridViewCountries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewCountries.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewCountries.DataSource = this.bindingSourceCountries;
+            this.dataGridViewCountries.Location = new System.Drawing.Point(297, 370);
+            this.dataGridViewCountries.Name = "dataGridViewCountries";
+            this.dataGridViewCountries.RowHeadersWidth = 10;
+            this.dataGridViewCountries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridViewCountries.Size = new System.Drawing.Size(567, 314);
+            this.dataGridViewCountries.TabIndex = 27;
+            // 
+            // ButtonSubmitCountry
+            // 
+            this.ButtonSubmitCountry.Location = new System.Drawing.Point(870, 428);
+            this.ButtonSubmitCountry.Name = "ButtonSubmitCountry";
+            this.ButtonSubmitCountry.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSubmitCountry.TabIndex = 29;
+            this.ButtonSubmitCountry.Text = "Submit";
+            this.ButtonSubmitCountry.UseVisualStyleBackColor = true;
+            // 
+            // ButtonReloadCountries
+            // 
+            this.ButtonReloadCountries.Location = new System.Drawing.Point(870, 399);
+            this.ButtonReloadCountries.Name = "ButtonReloadCountries";
+            this.ButtonReloadCountries.Size = new System.Drawing.Size(75, 23);
+            this.ButtonReloadCountries.TabIndex = 28;
+            this.ButtonReloadCountries.Text = "Reload";
+            this.ButtonReloadCountries.UseVisualStyleBackColor = true;
+            this.ButtonReloadCountries.Click += new System.EventHandler(this.ButtonReloadCountries_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // ButtonLoadCSV
+            // 
+            this.ButtonLoadCSV.Location = new System.Drawing.Point(870, 370);
+            this.ButtonLoadCSV.Name = "ButtonLoadCSV";
+            this.ButtonLoadCSV.Size = new System.Drawing.Size(75, 23);
+            this.ButtonLoadCSV.TabIndex = 30;
+            this.ButtonLoadCSV.Text = "Load CSV";
+            this.ButtonLoadCSV.UseVisualStyleBackColor = true;
+            this.ButtonLoadCSV.Click += new System.EventHandler(this.ButtonLoadCSV_Click);
+            // 
             // FormNewItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1500, 731);
+            this.Controls.Add(this.ButtonLoadCSV);
+            this.Controls.Add(this.ButtonSubmitCountry);
+            this.Controls.Add(this.ButtonReloadCountries);
+            this.Controls.Add(this.dataGridViewCountries);
+            this.Controls.Add(this.ButtonExit);
             this.Controls.Add(this.ButtonOpenPDF);
             this.Controls.Add(this.textBoxSofexCase);
             this.Controls.Add(this.SubmitButton);
             this.Controls.Add(this.ReloadButton);
-            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.dataGridViewItems);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxCellexOther);
@@ -338,8 +419,10 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCountries)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCountries)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,11 +451,18 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGridViewItems;
         private System.Windows.Forms.Button ReloadButton;
         private System.Windows.Forms.Button SubmitButton;
-        private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.TextBox textBoxSofexCase;
         private System.Windows.Forms.Button ButtonOpenPDF;
+        private System.Windows.Forms.Button ButtonExit;
+        private System.Windows.Forms.DataGridView dataGridViewCountries;
+        private System.Windows.Forms.Button ButtonSubmitCountry;
+        private System.Windows.Forms.Button ButtonReloadCountries;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button ButtonLoadCSV;
+        private System.Windows.Forms.BindingSource bindingSourceItems;
+        private System.Windows.Forms.BindingSource bindingSourceCountries;
     }
 }

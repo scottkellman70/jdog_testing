@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,34 +22,34 @@ namespace SOFDT3
         public FormNewItem()
         {
             InitializeComponent();
+            //GetData("select * from items", this.dataGridView2, this.bindingSource1);
+            //GetData("select * from countries;", this.dataGridView3, this.bindingSource2);
         }
 
         private void FormNewItem_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = bindingSource2;
-            GetData("select * from items");
+            GetData("select * from items", this.dataGridViewItems, this.bindingSourceItems);
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
         {
-            GetData("select * from items");
+            GetData("select * from items", this.dataGridViewItems, this.bindingSourceCountries);
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             // Update the database with changes.
-            dataAdapter.Update((DataTable)bindingSource2.DataSource);
+            dataAdapter.Update((DataTable)bindingSourceItems.DataSource);
         }
 
-        private void GetData(string selectCommand)
+        private void GetData(string selectCommand, DataGridView dgv, BindingSource bs)
         {
-            //this.dataGridView2.Dock = DockStyle.Fill;
             dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
             DataTable table = new DataTable();
             dataAdapter.Fill(table);
-            bindingSource2.DataSource = table;
-            dataGridView2.DataSource = bindingSource2;
+            bs.DataSource = table;
+            dgv.DataSource = bs;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -104,6 +105,7 @@ namespace SOFDT3
                 adapter.InsertCommand = new SqlCommand(sql, connection);
                 adapter.InsertCommand.ExecuteNonQuery();
                 MessageBox.Show("Row inserted !! ");
+                GetData("select * from items", this.dataGridViewItems, this.bindingSourceItems);
             }
             catch (Exception ex)
             {
@@ -130,7 +132,7 @@ namespace SOFDT3
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = "SOF DT3 - PDF Viewer",
                 StartPosition = FormStartPosition.CenterScreen,
-                WindowState = FormWindowState.Maximized
+                WindowState = FormWindowState.Normal
             };
 
             brosweFolders.Click += (sender, e) =>
@@ -146,6 +148,58 @@ namespace SOFDT3
             prompt.Controls.Add(brosweFolders);
             prompt.AcceptButton = brosweFolders;
             prompt.ShowDialog();
+
+        }
+
+        private void ButtonExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void ButtonReloadCountries_Click(object sender, EventArgs e)
+        {
+            GetData("select * from countries;", this.dataGridViewCountries, this.bindingSourceCountries);
+        }
+
+        private void ButtonLoadCSV_Click(object sender, EventArgs e)
+        {
+            SqlConnection connection;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            DialogResult result = this.openFileDialog1.ShowDialog();
+
+            if (result == DialogResult.OK && !string.IsNullOrEmpty(this.openFileDialog1.FileName))
+            {
+                string[] countries = File.ReadAllLines(this.openFileDialog1.FileName);
+
+                foreach (string country in countries)
+                {
+                    string[] indivCtry = country.Split(';');
+                    string name = indivCtry[0].ToString().Replace("'", "").Replace("^", "");
+                    string trigram = indivCtry[1];
+                    InsertCountry(name, trigram, connection, dataAdapter);
+                }
+                connection.Close();
+                connection.Dispose();
+            }
+
+        }
+
+        private void InsertCountry(string name, string trigram, SqlConnection cn, SqlDataAdapter adapter)
+        {
+            string sql = "insert into Countries (name, trigram) values('" + name + "','" + trigram + "');";
+
+            try
+            {
+                adapter.InsertCommand = new SqlCommand(sql, cn);
+                adapter.InsertCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
         }
     }
